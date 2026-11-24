@@ -30,6 +30,18 @@ jobs:
           base64 --decode /tmp/source.tar.xz.b64 > /tmp/source.tar.xz
           tar -tJf /tmp/source.tar.xz > /dev/null
           tar -xJf /tmp/source.tar.xz -C .
+      - name: Correct scanner checklist key typing
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("src/App.tsx")
+          source = path.read_text()
+          old = "const checklist:[keyof MtaChecks,string][]="
+          new = "const checklist:[Exclude<keyof MtaChecks,'h4Bias'|'h1Bias'>,string][]="
+          if old not in source:
+              raise SystemExit("Expected scanner checklist declaration was not found")
+          path.write_text(source.replace(old, new, 1))
+          PY
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Build
