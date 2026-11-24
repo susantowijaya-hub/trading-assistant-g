@@ -1,0 +1,7 @@
+name = "trading-assistant-g-exness"
+main = "src/index.js"
+compatibility_date = "2026-11-24"
+
+[vars]
+ALLOWED_ORIGIN = "https://susantowijaya-hub.github.io"
+EXN_DISCOVERY_BASE_URL = "https://api.exness.com"
